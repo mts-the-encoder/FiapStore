@@ -3,34 +3,31 @@ using FiapStore.Interface;
 
 namespace FiapStore.Repositories;
 
-public class UserRepository : IUserRepository
+public class UserRepository : DapperRepository<User>, IUserRepository
 {
-    private IList<User> _users = new List<User>();
-
-    public IList<User> GetAll()
+    public UserRepository(IConfiguration configuration) : base(configuration) { }
+    public override IList<User> GetAll()
     {
-        return _users;
+        throw new NotImplementedException();
     }
 
-    public User GetById(int id)
+    public override User GetById(int id)
     {
-        return _users.FirstOrDefault(x => x.Id == id);
+        throw new NotImplementedException();
     }
 
-    public void Create(User user)
+    public override void Create(User entity)
     {
-        _users.Add(user);
+        throw new NotImplementedException();
     }
 
-    public void Update(User user)
+    public override void Update(User entity)
     {
-        var userUpdated = GetById(user.Id);
-
-        if (userUpdated != null) userUpdated.Name = user.Name;
+        throw new NotImplementedException();
     }
 
-    public void Delete(int id)
+    public override void Delete(int id)
     {
-        _users.Remove(GetById(id));
+        throw new NotImplementedException();
     }
 }
