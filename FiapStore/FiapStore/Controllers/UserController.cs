@@ -1,4 +1,5 @@
-﻿using FiapStore.Interface;
+﻿using FiapStore.Entities;
+using FiapStore.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FiapStore.Controllers;
@@ -16,30 +17,35 @@ public class UserController : ControllerBase
     [HttpGet]
     public IActionResult GetAll()
     {
-        return Ok("Success!");
+        var users = _repository.GetAll();
+        return Ok(users);
     }
 
-    [HttpGet("Id")]
-    public IActionResult GetById()
+    [HttpGet("{id}")]
+    public IActionResult GetById(int id)
     {
-        return Ok("Success by Id!");
+        var user = _repository.GetById(id);
+        return Ok(user);
     }
 
     [HttpPost]
-    public IActionResult Create()
+    public IActionResult Create(User user)
     {
-        return Created(string.Empty,"User Created!");
+        _repository.Create(user);
+        return Created(string.Empty, user);
     }
 
     [HttpPut]
-    public IActionResult Update()
+    public IActionResult Update(User user)
     {
-        return Ok("User Updated!");
+        _repository.Update(user);
+        return Ok(user);
     }
 
-    [HttpDelete]
-    public IActionResult Delete()
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
     {
+        var user = _repository.GetById(id);
         return Ok("User Deleted!");
     }
 }
