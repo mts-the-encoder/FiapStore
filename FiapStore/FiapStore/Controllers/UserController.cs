@@ -1,4 +1,5 @@
-﻿using FiapStore.Entities;
+﻿using FiapStore.Dtos;
+using FiapStore.Entities;
 using FiapStore.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,17 +29,24 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
-    [HttpPost]
-    public IActionResult Create(User user)
+    [HttpGet("orders/{id}")]
+    public IActionResult GetOrdersById(int id)
     {
-        _repository.Create(user);
+        var user = _repository.GetWithOrders(id);
+        return Ok(user);
+    }
+
+    [HttpPost]
+    public IActionResult Create(CreateUserDto user)
+    {
+        _repository.Create(new User(user));
         return Created(string.Empty, user);
     }
 
     [HttpPut]
-    public IActionResult Update(User user)
+    public IActionResult Update(UpdateUserDto user)
     {
-        _repository.Update(user);
+        _repository.Update(new User(user));
         return Ok(user);
     }
 

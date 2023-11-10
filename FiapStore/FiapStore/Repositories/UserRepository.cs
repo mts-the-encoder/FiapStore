@@ -43,4 +43,28 @@ public class UserRepository : DapperRepository<User>, IUserRepository
         const string query = "DELETE FROM [FiapStore].[dbo].[User] WHERE Id = @Id";
         dbConnection.Execute(query, new { Id = id });
     }
+
+    public User GetWithOrders(int id)
+    {
+        using var dbConnection = new SqlConnection(ConnectionString);
+        var query = "SELECT u.*, o.* FROM[FiapStore].[dbo].[User] u LEFT JOIN [FiapStore].[dbo].[Order] o ON u.Id = o.UserId";
+        var result = new Dictionary<int, User>();
+        var param = new { Id = id };
+        
+        dbConnection.Query<User, Order, User>(query, (user, order) =>
+        {
+            if (!result.TryGetValue(user.Id, out var existingUser))
+            {
+                existingUser = user;
+                existingUser.Orders = new List<Order>();
+                result.Add(user.Id, existingUser);
+            }
+
+            if (order != null) existingUser.Orders.Add(order);
+
+            return existingUser;
+        }, param, splitOn: "Id");
+
+        return result.Values.FirstOrDefault();
+    }
 }
