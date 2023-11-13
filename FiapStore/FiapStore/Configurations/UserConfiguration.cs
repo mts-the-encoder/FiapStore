@@ -12,7 +12,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.ToTable("User");
         builder.HasKey(u => u.Id);
         builder.Property(u => u.Id)
-            .HasColumnType("INT").ValueGeneratedNever().UseIdentityColumn();
+            .HasColumnType("INT").UseIdentityColumn();
         builder.Property(u => u.Name).HasColumnType("VARCHAR(100)");
         builder.HasMany(u => u.Orders)
             .WithOne(o => o.User)

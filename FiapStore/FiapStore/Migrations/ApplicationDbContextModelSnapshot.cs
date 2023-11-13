@@ -45,6 +45,7 @@ namespace FiapStore.Migrations
             modelBuilder.Entity("FiapStore.Entities.User", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INT");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));

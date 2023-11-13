@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FiapStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231113151529_Initial")]
+    [Migration("20231113182135_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -48,6 +48,7 @@ namespace FiapStore.Migrations
             modelBuilder.Entity("FiapStore.Entities.User", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INT");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
