@@ -37,17 +37,17 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(CreateUserDto user)
+    public IActionResult Create(CreateUserDto userDto)
     {
-        _repository.Create(new User(user));
-        return Created(string.Empty, user);
+        _repository.Create(new User(userDto));
+        return Created(string.Empty, userDto);
     }
 
     [HttpPut]
-    public IActionResult Update(UpdateUserDto user)
+    public IActionResult Update(UpdateUserDto userDto)
     {
-        _repository.Update(new User(user));
-        return Ok(user);
+        _repository.Update(new User(userDto));
+        return Ok(userDto);
     }
 
     [HttpDelete("{id}")]
