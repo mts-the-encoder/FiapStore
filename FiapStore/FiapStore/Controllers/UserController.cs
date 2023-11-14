@@ -10,21 +10,33 @@ namespace FiapStore.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserRepository _repository;
-    public UserController(IUserRepository repository)
+    private readonly ILogger<UserController> _logger;
+    public UserController(IUserRepository repository, ILogger<UserController> logger)
     {
         _repository = repository;
+        _logger = logger;
     }
 
     [HttpGet]
     public IActionResult GetAll()
     {
-        var users = _repository.GetAll();
-        return Ok(users);
+        try
+        {
+            throw new Exception("Error");
+            var users = _repository.GetAll();
+            return Ok(users);
+        }
+        catch (Exception e)
+        {
+           _logger.LogError(e, e.Message);
+           return BadRequest();
+        }
     }
 
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
+        _logger.LogInformation("Executando");
         var user = _repository.GetById(id);
         return Ok(user);
     }
@@ -39,6 +51,7 @@ public class UserController : ControllerBase
     [HttpPost]
     public IActionResult Create(CreateUserDto userDto)
     {
+        _logger.LogWarning("be careful with req time...");
         _repository.Create(new User(userDto));
         return Created(string.Empty, userDto);
     }
