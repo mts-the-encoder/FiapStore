@@ -1,6 +1,9 @@
-﻿using FiapStore.Dtos;
+﻿using System.Reflection.PortableExecutable;
+using FiapStore.Dtos;
 using FiapStore.Entities;
+using FiapStore.Enums;
 using FiapStore.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FiapStore.Controllers;
@@ -33,6 +36,8 @@ public class UserController : ControllerBase
         }
     }
 
+    [Authorize]
+    [Authorize(Roles = $"{Permissions.Admin}, {Permissions.Employee}")]
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
@@ -41,6 +46,8 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
+    [Authorize]
+    [Authorize(Roles = $"{Permissions.Admin}, {Permissions.Employee}")]
     [HttpGet("orders/{id}")]
     public IActionResult GetOrdersById(int id)
     {
@@ -48,6 +55,8 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
+    [Authorize]
+    [Authorize(Roles = $"{Permissions.Admin}, {Permissions.Employee}")]
     [HttpPost]
     public IActionResult Create(CreateUserDto userDto)
     {

@@ -3,7 +3,7 @@ using FiapStore.Interface;
 using FiapStore.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FiapStore.Configurations;
+namespace FiapStore.Controllers;
 
 [ApiController]
 [Route("login")]
@@ -21,7 +21,7 @@ public class LoginController : ControllerBase
     public IActionResult Authenticate(LoginDto loginDto)
     {
         var user = _repository.GetByNameAndPassword(loginDto.Username, loginDto.Password);
-        
+
         if (user == null)
         {
             return NotFound("Not Found");
@@ -31,6 +31,6 @@ public class LoginController : ControllerBase
 
         user.Password = null;
 
-        return Ok($"Bearer: {token}");
+        return Ok(token);
     }
 }
