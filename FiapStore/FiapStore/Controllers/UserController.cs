@@ -28,7 +28,7 @@ public class UserController : ControllerBase
         }
         catch (Exception e)
         {
-           _logger.LogError(e, e.Message);
+           _logger.LogError(e,$"{DateTime.Now} | ex: {e.Message}");
            return BadRequest();
         }
     }

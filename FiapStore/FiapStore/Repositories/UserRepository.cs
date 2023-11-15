@@ -18,4 +18,8 @@ public class UserRepository : EFRepository<User>, IUserRepository
             }).FirstOrDefault();
     }
 
+    public User GetByNameAndPassword(string name, string password)
+    {
+        return _context.Users.FirstOrDefault(x => x.Username == name && x.Password == password);
+    }
 }
